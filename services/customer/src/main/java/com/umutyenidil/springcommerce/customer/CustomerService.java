@@ -67,4 +67,8 @@ public class CustomerService {
                         "Customer with id " + customerId + " not found"
                 ));
     }
+
+    public void deleteCustomer(String customerId) {
+        customerRepository.deleteById(customerId);
+    }
 }
