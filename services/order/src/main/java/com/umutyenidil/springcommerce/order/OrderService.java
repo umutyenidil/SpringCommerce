@@ -2,6 +2,8 @@ package com.umutyenidil.springcommerce.order;
 
 import com.umutyenidil.springcommerce.customer.CustomerClient;
 import com.umutyenidil.springcommerce.exception.BusinessException;
+import com.umutyenidil.springcommerce.kafka.OrderConfirmation;
+import com.umutyenidil.springcommerce.kafka.OrderProducer;
 import com.umutyenidil.springcommerce.orderline.OrderLineRequest;
 import com.umutyenidil.springcommerce.orderline.OrderLineService;
 import com.umutyenidil.springcommerce.product.ProductClient;
@@ -18,17 +20,30 @@ public class OrderService {
     private final OrderRepository repository;
     private final OrderMapper mapper;
     private final OrderLineService orderLineService;
+    private final OrderProducer orderProducer;
 
     public Integer createOrder(@Valid OrderRequest request) {
         var customer = this.customerClient.findCustomerById(request.customerId())
                 .orElseThrow(()-> new BusinessException("Cannot create order with this customer"));
 
-        this.productClient.purchaseProducts(request.products());
+        var purchasedProducts = this.productClient.purchaseProducts(request.products());
 
         var order = this.repository.save(mapper.toOrder(request));
 
         for(PurchaseRequest purchaseRequest: request.products()) {
             orderLineService.saveOrderLine(new OrderLineRequest(null, order.getId(), purchaseRequest.productId(), purchaseRequest.quantity()));
         }
+
+        orderProducer.sendOrderConfirmation(
+                new OrderConfirmation(
+                        request.reference(),
+                        request.amount(),
+                        request.paymentMethod(),
+                        customer,
+                        purchasedProducts
+                )
+        );
+
+        return order.getId();
     }
 }
