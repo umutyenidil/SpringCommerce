@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f7;
+            font-family: Arial, sans-serif;
+            color: #51545E;
+        }
+        .email-wrapper {
+            width: 100%;
+            background-color: #f4f4f7;
+            padding: 20px 0;
+        }
+        .email-content {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #FFFFFF;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .email-header {
+            background-color: #3869D4;
+            color: #ffffff;
+            text-align: center;
+            padding: 40px 0;
+        }
+        .email-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .email-body {
+            padding: 30px;
+        }
+        .email-body p {
+            margin: 0 0 15px;
+            line-height: 1.5;
+        }
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .order-table th,
+        .order-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #eaeaec;
+        }
+        .order-table th {
+            background-color: #f0f0f2;
+        }
+        .order-summary {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .email-footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #999999;
+        }
+    </style>
+</head>
+<body>
+<table class="email-wrapper" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="center">
+            <table class="email-content" cellpadding="0" cellspacing="0">
+
+                <!-- Header -->
+                <tr>
+                    <td class="email-header">
+                        <h1 th:text="${subject}">Order Confirmation</h1>
+                    </td>
+                </tr>
+
+                <!-- Body -->
+                <tr>
+                    <td class="email-body">
+                        <p>Hi <strong th:text="${customerName}">Customer Name</strong>,</p>
+                        <p>Thank you for your order <strong th:text="${orderReference}">REF12345</strong>. Here’s a summary of your purchase:</p>
+
+                        <table class="order-table">
+                            <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Subtotal</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="product : ${products}">
+                                <td th:text="${product.name}">Product Name</td>
+                                <td th:text="${product.quantity}">1</td>
+                                <td th:text="${product.price}">$0.00</td>
+                                <td th:text="${#numbers.formatDecimal(product.price.multiply(product.quantity), 2)}">$0.00</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <p class="order-summary">
+                            Total Amount: <span th:text="${totalAmount}">$0.00</span>
+                        </p>
+
+                        <p>If you have any questions, just reply to this email—we’re always happy to help.</p>
+                        <p>Cheers,<br/>The UmutYenidil Team</p>
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td class="email-footer">
+                        <p>&copy; 2025 UmutYenidil. All rights reserved.</p>
+                        <p>1234 Bank Street, İstanbul, Türkiye</p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Payment Confirmation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f7;
+            font-family: Arial, sans-serif;
+            color: #51545E;
+        }
+        .email-wrapper {
+            width: 100%;
+            background-color: #f4f4f7;
+            padding: 20px 0;
+        }
+        .email-content {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #FFFFFF;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .email-header {
+            background-color: #3869D4;
+            color: #ffffff;
+            text-align: center;
+            padding: 40px 0;
+        }
+        .email-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .email-body {
+            padding: 30px;
+        }
+        .email-body p {
+            margin: 0 0 15px;
+            line-height: 1.5;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3869D4;
+            color: #ffffff !important;
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .email-footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #999999;
+        }
+    </style>
+</head>
+<body>
+<table class="email-wrapper" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="center">
+            <table class="email-content" cellpadding="0" cellspacing="0">
+
+                <!-- Header -->
+                <tr>
+                    <td class="email-header">
+                        <h1 th:text="${subject}">Payment Confirmation</h1>
+                    </td>
+                </tr>
+
+                <!-- Body -->
+                <tr>
+                    <td class="email-body">
+                        <p>Dear <strong th:text="${customerName}">Customer Name</strong>,</p>
+
+                        <p>Thank you for your payment of <strong th:text="${amount}">$0.00</strong>.</p>
+
+                        <p>Your order reference is <strong th:text="${orderReference}">REF12345</strong>.</p>
+
+                        <p>If you have any questions or need further assistance, feel free to reply to this email or contact our support team.</p>
+
+                        <p>Best regards,<br/>
+                            The UmutYenidil Team</p>
+
+                        <!-- Example button if you want to link back to an order page -->
+                        <!--
+                        <p>
+                          <a href="#" class="button">View Your Order</a>
+                        </p>
+                        -->
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td class="email-footer">
+                        <p>&copy; 2025 UmutYenidil. All rights reserved.</p>
+                        <p>1234 Bank Street, İstanbul, Türkiye</p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
