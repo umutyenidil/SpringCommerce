@@ -13,12 +13,12 @@ import java.util.HashMap;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(ProductPurchaseException.class)
-    public ResponseEntity<String> handle(ProductPurchaseException exception) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(exception.getMessage());
-    }
+//    @ExceptionHandler(ProductPurchaseException.class)
+//    public ResponseEntity<String> handle(ProductPurchaseException exception) {
+//        return ResponseEntity
+//                .status(HttpStatus.BAD_REQUEST)
+//                .body(exception.getMessage());
+//    }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handle(EntityNotFoundException exception) {

@@ -16,7 +16,6 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-@Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "customer_order")
